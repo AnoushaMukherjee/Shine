@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+    body {
+        background-color: rgb(255, 193, 135);
+        font-family: 'Segoe UI', sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    h1 {
+        color: rgb(104, 35, 195);
+        text-align: center;
+        font-family: Trebuchet MS, sans-serif;
+    }
+    nav {
+        background-color: rgb(54, 17, 103);
+        text-align: center;
+    }
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+    li {
+        display: inline-block;
+        margin-right: 10px;
+    }
+    li a {
+        display: block;
+        font-family: 'Segoe UI', sans-serif;
+        color: white;
+        text-decoration: none;
+        padding: 10px 20px;
+    }
+    li a:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+    li b {
+        color: rgb(104, 35, 195);
+        margin-top: 10px;
+        margin-bottom: 10px;
+        margin-left: 20px;
+        margin-right: 700px;
+    }
+    .container {
+        margin: 20px;
+    }
+    .links {
+        margin-top: 20px;
+    }
+    button {
+        background-color:rgb(54, 17, 103);
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        margin-top: 10px
+    }
+    p {
+        color: rgb(104, 35, 195);
+        margin-top: 10px;
+        margin-bottom: 10px;
+        margin-left: 20px;
+        margin-right: 700px;
+    }
+    .img1 {
+        position: absolute;
+        top: 220px;
+        right: 100px;
+    }
+    .image {
+        width: 400px;
+        height: 400px;
+    }
+    </style>
+    <title>Flare-Ups</title>
+    <script>
+        var flareUps = []; // Array to store the flare-up information
+
+        function showForm() {
+            document.getElementById("flareup-form").style.display = "block";
+            document.getElementById("record-button").style.display = "none";
+        }
+
+        function hideForm() {
+            document.getElementById("flareup-form").style.display = "none";
+            document.getElementById("record-button").style.display = "block";
+        }
+
+        function logFlareUp() {
+            var startDate = document.getElementById("start-date").value;
+            var endDate = document.getElementById("end-date").value;
+            var severity = document.getElementById("severity").value;
+
+            var flareUpData = {
+                startDate: startDate,
+                endDate: endDate,
+                severity: severity
+            };
+
+            flareUps.push(flareUpData); // Store the flare-up data in the array
+            hideForm();
+            clearForm(); // Clear the form after submitting
+            sendFlareUps();
+        }
+
+        function clearForm() {
+            document.getElementById("form").reset();
+        }
+    </script>
+</head>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='shinelogo.png') }}">
+<body>
+    <h1>Shine</h1>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/environment">Environment</a></li>
+            <li><a href="/flare_ups">Flare-Ups</a></li>
+            <li><a href="/exercise">Exercise</a></li>
+            <li><a href="connections">Connections</a></li>
+            {% if login_message %}
+                <li><a href="{{ usr }}">Login/Sign Up</a></li>
+            {% else %}
+                <li><a href="/account">Login/Sign Up</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div id="flareup-form" class="links" style="display: none;">
+            <form id="form">
+                <label for="start-date">Start of Flare-Up:</label>
+                <input type="date" id="start-date" required>
+
+                <label for="end-date">End of Flare-Up:</label>
+                <input type="date" id="end-date" required>
+
+                <label for="severity">Severity of Flare-Up:</label>
+                <select id="severity" required>
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+
+                <br>
+
+                <button type="button" onclick="logFlareUp()">Log Flare-Up</button>
+            </form>
+        </div>
+
+        <button id="record-button" onclick="showForm()">Record Another Flare-Up</button>
+    </div>
+
+    <script>
+        showForm();
+    </script>
+    <p>What's a Flare-Up?</p>
+    <p>It's a return of eczema symptoms that typically include a red, itchy skin rash. You may also notice: Inflamed reddish brown or gray patches, especially on your hands, feet, chest, neck, and inside the bends of your elbows and knees.</p>
+    <p>What causes a Flare-Up?</p>
+    <p>Triggers aren't the same for everyone, and there may be a lag between the trigger and the symptoms. Sweat, fabrics (wool, polyester), pet dander, hot or cold weather, and harsh soaps are common triggers. Others include:</p>
+    <p>     1. Dry skin. It could get scaly, tight, and easy to crack, which can lead to a flare-up</p>
+    <p>     2. Stress. For some people, emotional stress can trigger eczema symptoms. Doctors don't know exactly why this is, but there are ways to help lessen the stress in your life, from mind-body and meditation techniques, to lifestyle changes, to therapy approaches like cognitive behavioral therapy. Talk to your healthcare provider about how to reduce stress if it's a trigger for your eczema</p>
+    <p>     3. Irritants. These could include household items like hand and dish soap, laundry detergent, shampoo, body wash, or home cleaners and disinfectants. Juice from fruit, vegetables, and even meats can act as triggers in some people. Other common irritants include:</p>
+        <p>          a. Cigarette smoke</p>
+        <p>          b. Metals like nickel</p>
+        <p>          c. Perfume and other fragrances</p>
+        <p>          d. Antibacterial ointment like neomycin and bacitracin</p>
+        <p>          e. Formaldehyde (in some disinfectants, vaccines, and glues)</p>
+        <p>          f. Cocamidopropyl betaine (thickener in lotions and shampoos)</p>
+        <p>          g. Paraphenylene-diamine (in dyes, temporary tattoos, and elsewhere)</p>
+        <p>          h. Isothiazolinone (antibacterial in baby wipes and other personal products) (Web MD)</p>
+    </ul>
+    <script>
+    function sendFlareUps() {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/flare_ups", true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                // Request successful
+                console.log(xhr.responseText);
+            }
+        };
+        var flareUpData = JSON.stringify(flareUps); // Convert flareUps array to JSON
+        xhr.send(flareUpData);
+}
+    </script>
+    <div class="img1">
+        <img src="/static/eczema1.png" alt="Image" class="image">
+    </div>
+</body>
+</html>

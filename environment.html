@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+    body {
+        background-color: rgb(255, 193, 135);
+        font-family: 'Segoe UI', sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    h1 {
+        font-family: Trebuchet MS, sans-serif;
+        color: rgb(104, 35, 195);
+        text-align: center;
+    }
+    p {
+        font-family: 'Segoe UI', sans-serif;
+        font-size: large;
+        color: rgb(104, 35, 195);
+        margin-top: 35px;
+        margin-left: 450px;
+    }
+    nav {
+        background-color: rgb(54, 17, 103);
+        text-align: center;
+    }
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+    li {
+        display: inline-block;
+        margin-right: 10px;
+    }
+    li a {
+        display: block;
+        font-family: 'Segoe UI', sans-serif;
+        color: white;
+        text-decoration: none;
+        padding: 10px 20px;
+    }
+    li a:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+    .container {
+        text-align: left;
+        margin-top: 20px;
+    }
+    .environment-info {
+        margin-top: 20px;
+    }
+    .img1 {
+        position: absolute;
+        top: 400px;
+        left: 30px;
+    }
+    .img2 {
+        position: absolute;
+        top: 400px;
+        right: 30px;
+    }
+    .img3 {
+        position: absolute;
+        top: 140px;
+        left: 30px;
+    }
+    .img4 {
+        position: absolute;
+        top: 140px;
+        right: 30px;
+    }
+    .image {
+        width: 370px;
+        height: 230px;
+    }
+    </style>
+    <title>Environment</title>
+</head>
+<link rel="icon" type="image/png" href="{{ url_for('static', filename='shinelogo.png') }}">
+<body>
+<h1>Shine</h1>
+<!-- Image Source 1: https://www.thrillist.com/travel/nation/most-beautiful-states-in-america -->
+<!-- Image Source 2: https://wallpapercrafter.com/579504-grassland-nature-sky-field-meadow-grass-hill-pasture.html -->
+<!-- Image Source 3 & 4: https://www.loveexploring.com/gallerylist/92672/the-worlds-most-beautiful-natural-wonders -->
+<nav>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/environment">Environment</a></li>
+        <li><a href="/flare_ups">Flare-Ups</a></li>
+        <li><a href="/exercise">Exercise</a></li>
+        <li><a href="connections">Connections</a></li>
+        {% if login_message %}
+            <li><a href="{{ usr }}">Login/Sign Up</a></li>
+        {% else %}
+            <li><a href="/account">Login/Sign Up</a></li>
+        {% endif %}
+    </ul>
+</nav>
+<div class="container">
+    <div class="environment-info">
+        <p>The current UV index is: <b>{{ outputs[0] }}</b></p>
+        <p>The current temperature is: <b>{{ outputs[1] }}°F</b></p>
+        <p>The current humidity is <b>{{ outputs[2] }}%</b></p>
+        <p>The current tree pollen level is {{ outputs[3] }} or <b>{{ tgwm[0] }}</b></p>
+        <p>The current grass pollen level is {{ outputs[4] }} or <b>{{ tgwm[1] }}</b></p>
+        <p>The current weed pollen level is {{ outputs[5] }} or <b>{{ tgwm[2] }}</b></p>
+        <p>The current mold level is {{ outputs[6] }} or <b>{{ tgwm[3] }}</b></p>
+        <p>The current predominant pollen type is <b>{{ outputs[7] }}</b></p>
+    </div>
+</div>
+<div class="img3">
+    <img src="/static/environment3.jpg" alt="Image" class="image">
+</div>
+<div class="img4">
+    <img src="/static/environment4.jpg" alt="Image" class="image">
+</div>
+<div class="img1">
+    <img src="/static/environment1.jpg" alt="Image" class="image">
+</div>
+<div class="img2">
+    <img src="/static/environment2.jpg" alt="Image" class="image">
+</div>
+</body>
+</html>

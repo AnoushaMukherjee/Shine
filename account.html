@@ -1,0 +1,147 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+    body {
+        background-color: rgb(255, 193, 135);
+        font-family: 'Segoe UI', sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    h1 {
+        color: rgb(104, 35, 195);
+        text-align: center;
+        font-family: Trebuchet MS, sans-serif;
+    }
+    h2 {
+        color: rgb(104, 35, 195);
+    }
+    h3 {
+        color: rgb(212, 180, 254);
+        text-align: right;
+        font-family: 'Segoe UI', sans-serif;
+        margin-right: 80px;
+        margin-top: -150px;
+    }
+    nav {
+        background-color: rgb(54, 17, 103);
+        text-align: center;
+    }
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+    li {
+        display: inline-block;
+        margin-right: 10px;
+    }
+    li a {
+        display: block;
+        font-family: 'Segoe UI', sans-serif;
+        color: white;
+        text-decoration: none;
+        padding: 10px 20px;
+    }
+    li a:hover {
+        background-color: rgb(255, 255, 255, 0.2);
+    }
+    .container {
+        margin: 30px;
+    }
+    .links {
+        margin-top: 20px;
+    }
+    .logout-button {
+        display: none;
+    }
+    </style>
+    <title>Account</title>
+</head>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='shinelogo.png') }}">
+<body>
+    <h1>Shine</h1>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/environment">Environment</a></li>
+            <li><a href="/flare_ups">Flare-Ups</a></li>
+            <li><a href="/exercise">Exercise</a></li>
+            <li><a href="connections">Connections</a></li>
+            {% if login_message %}
+                <li><a href="{{ usr }}">Login/Sign Up</a></li>
+            {% else %}
+                <li><a href="/account">Login/Sign Up</a></li>
+            {% endif %}
+        </ul>
+    </nav>    
+    <div class="container">
+        <form method="post" action="/account" id="login-form">
+            <h2>Login</h2>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <br><br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <br><br>
+            <input type="submit" value="Log In">
+        </form>
+        <form method="post" action="/signup" id="signup-form">
+            <h2>Sign Up</h2>
+            <label for="first_name">First Name:</label>
+            <input type="text" id="first_name" name="first_name" required>
+            <br><br>
+            <label for="last_name">Last Name:</label>
+            <input type="text" id="last_name" name="last_name" required>
+            <br><br>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <br><br>
+            <label for="username">Username:</label>
+            <input type="text" id="signup_username" name="username" required>
+            <br><br>
+            <label for="password">Password:</label>
+            <input type="password" id="signup_password" name="password" required>
+            <br><br>
+            <input type="submit" value="Sign Up">
+        </form>
+    </div>
+    {% if signup_message %}
+        <div class="container">
+            <p>{{ signup_message }}</p>
+        </div>
+    {% endif %}
+    {% if login_message %}
+        <div class="container">
+            <p>{{ login_message }}</p>
+            <h3>{{ request.args.get('official_username') }}</h3>
+            {% set usr = "/account?login_message=Logged+in+successfully!&official_username=" ~ request.args.get('official_username') %}
+            <script>
+                const isLoggedIn = true;
+                const loginForm = document.getElementById("login-form");
+                const signupForm = document.getElementById("signup-form");
+                const logoutButton = document.createElement("button");
+                logoutButton.classList.add("logout-button");
+                logoutButton.id = "logout-button";
+                logoutButton.textContent = "Log Out";
+                logoutButton.addEventListener("click", () => {
+                    window.location.href = "/account?logout=true";
+                });
+                document.querySelector(".container").appendChild(logoutButton);
+                loginForm.style.display = "none";
+                signupForm.style.display = "none";
+                logoutButton.style.display = "block";
+            </script>
+        </div>
+    {% endif %}
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const logoutParam = urlParams.get('logout');
+        if (logoutParam === "true") {
+            const isLoggedIn = false;
+            window.location.href = "/account";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+    body {
+        background-color: rgb(255, 193, 135);
+        font-family: 'Segoe UI', sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    h1 {
+        color: rgb(104, 35, 195);
+        text-align: center;
+        font-family: Trebuchet MS, sans-serif;
+    }
+    he2 {
+        color: rgb(104, 35, 195);
+        font-size: larger;
+        font-style: oblique;
+        font-family: 'Segoe UI', sans-serif;
+        text-align: left;
+        margin-top: 20px;
+        margin-left: 40px;
+        margin-right: 550px;
+    }
+    p {
+        font-family: 'Segoe UI', sans-serif;
+        color: rgb(104, 35, 195);
+        padding: 10px 20px;
+        text-align: left;
+        margin-top: 20px;
+        margin-left: 20px;
+        margin-right: 550px;
+    }
+    nav {
+        background-color: rgb(54, 17, 103);
+        text-align: center;
+    }
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+    li {
+        display: inline-block;
+        margin-right: 10px;
+    }
+    li a {
+        display: block;
+        font-family: 'Segoe UI', sans-serif;
+        color: white;
+        text-decoration: none;
+        padding: 10px 20px;
+    }
+    li a:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+    .container {
+        margin-top: 20px;
+        margin-right: 30px;
+    }
+    .image-container {
+        text-align: center;
+        margin-top: -410px;
+        margin-left: 600px;
+    }
+    .logo-image {
+        width: 350px;
+        height: 350px;
+    }
+    .about-shine {
+        margin-top: 20px;
+    }
+    .green-button {
+        background-color: rgb(104, 35, 195);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        float: right;
+        margin-top: -510px;
+        margin-right: 300px;
+    }
+    </style>
+    <title>Home</title>
+    <script>
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+        function showPosition(position) {
+            alert("Location shared!");
+            // Retrieve latitude and longitude
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+
+            // Create a new FormData object
+            var formData = new FormData();
+            formData.append('latitude', latitude);
+            formData.append('longitude', longitude);
+
+            // Send a POST request to the server-side script
+            fetch('/transfer', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())  // Parse response as JSON
+            .then(data => {
+                alert("Latitude: " + data.latitude + "\nLongitude: " + data.longitude);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+        function showError(error) {
+            switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    alert("User denied the request for Geolocation.");
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    alert("Location information is unavailable.");
+                    break;
+                case error.TIMEOUT:
+                    alert("The request to get user location timed out.");
+                    break;
+                case error.UNKNOWN_ERROR:
+                    alert("An unknown error occurred.");
+                    break;
+            }
+        }
+    </script>
+</head>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='shinelogo.png') }}">
+<body>
+    <h1>Shine</h1>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/environment">Environment</a></li>
+            <li><a href="/flare_ups">Flare-Ups</a></li>
+            <li><a href="/exercise">Exercise</a></li>
+            <li><a href="connections">Connections</a></li>
+            <li><a href="/account">Login/Sign Up</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <div class="about-shine">
+            <he2><b>Shine is a website to help people with eczema.</b></he2>
+            <p>Eczema is a chronic condition that causes dry, itchy, and inflamed skin. <b>1 in 10</b> teenagers have some form of eczema in the United States. Atopic Dermatitis, the most common kind of eczema, affects about <b>10 million kids</b> under the age of 18! There are seven types of eczema, and most teenagers develop more than one.</p>
+            <he2><b>Atopic Dermatitis affects 10 million children.</b></he2>
+            <p>The variants range from small circular patches on skin, reactions to metals and substances, <b>big rashes</b>, extreme blisters, dry skin, and <b>inflammation</b>, according to the <b>National Eczema Association</b> (NEA). These are not the only effects of eczema. The NEA further explains the phenomenon of sweat: “When body temperature rises, the sympathetic nerves system stimulates the eccrine sweat glands to secrete water to the skin surface, where it cools the body by evaporation.”</p>
+            <he2><b>80% of children with Atopic Dermatitis experience insomnia.</b></he2>
+            <p><b>As the sweat evaporates, the skin dries out and is left with a salty residue that can irritate eczema skin and bring on the itch</b>. In return, 56.3% of eczema patients are likely to not participate in sports or get enough physical activity due to sweating. The physical wellness of these patients is impacted greatly because they are <b>prone to being overweight or obese</b>.</p>
+            <button class="green-button" onclick="getLocation()">Allow Location Access</button>
+        </div>
+    </div>
+    <div class="image-container">
+        <img src="/static/shinelogo2.png" alt="Shine" class="logo-image">
+    </div>
+</body>
+</html>
